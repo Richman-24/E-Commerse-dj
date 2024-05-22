@@ -38,10 +38,10 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Информация
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu bg-custom">
                                 <li><a class="dropdown-item  text-white" href="#">Доставка и оплата</a></li>
                                 <li><a class="dropdown-item  text-white" href="#">Контактная информация</a></li>
-                                <li><a class="dropdown-item  text-white" href="#">Про нас</a></li>
+                                <li><a class="dropdown-item  text-white" href="{% url "main:about" %}">Про нас</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -55,7 +55,7 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Мой профиль
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu bg-custom">
                                 <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
                                 <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
                                 </li>
