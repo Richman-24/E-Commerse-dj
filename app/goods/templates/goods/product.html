@@ -1,9 +1,9 @@
 ﻿{% extends "base.html" %}
 {% load static %}
 
-{% block css %}
+{% comment %} {% block css %}
     <link rel="stylesheet" href="{% static "deps/css/my_footer_css.css" %}">
-{% endblock css %}
+{% endblock css %} {% endcomment %}
 
 {% block content %}
     <div class="container mt-5">
@@ -43,7 +43,7 @@
             </div>
             <!-- Описание товара -->
             <div class="card-body">
-                <p class="card-text">Цена: <strong>product.sell_price $</strong></p>
+                <p class="card-text">Цена: <strong>{{product.sell_price}} $</strong></p>
                 <h5 class="card-title">{{product.name}}</h5>
                 <p class="card-text">{{product.description}}</p>
                 <a href="#" class="btn btn-dark add-to-cart">Добавить в корзину</a>
@@ -52,11 +52,11 @@
     </div>
 {% endblock content %}
 
-{% block footer %}
+{% comment %} {% block footer %}
     <footer class="py-1">
         <div class="container" >
             <p class="m-0 text-center text-white">tg: @best_coffee_Shop_Ever</p>
             <p class="m-0 text-center text-white">Телефон: +7(999)999-99-99</p>
         </div>
     </footer>
-{% endblock footer %}
+{% endblock footer %} {% endcomment %}
