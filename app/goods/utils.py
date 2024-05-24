@@ -19,19 +19,19 @@ def q_search(query):
         )
 
     result = result.annotate(
-        headline = SearchHeadline(
+        headline=SearchHeadline(
             "name",
             query,
-            start_sel='<span style="background-collor: yellow;">',
-            stop_sel='</span>')
+            start_sel='<span style="background-color: yellow;">',
+            stop_sel='</span>',
+        )
     )
-
     result = result.annotate(
-        bodyline = SearchHeadline(
+        bodyline=SearchHeadline(
             "description",
             query,
-            start_sel='<span style="background-collor: yellow;">',
-            stop_sel='</span>')
+            start_sel='<span style="background-color: yellow;">',
+            stop_sel='</span>',
+        )
     )
-
     return result
