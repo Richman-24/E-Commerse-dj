@@ -1,11 +1,15 @@
-from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.shortcuts import redirect
+from django.http import JsonResponse
 
+from carts.utils import get_user_carts
 from goods.models import Products
 from carts.models import Cart
 
-def cart_add(request, product_slug):
+def cart_add(request):
 
-    product = Products.objects.get(slug=product_slug)
+    product_id = request.POST.get("product_id")
+    product = Products.objects.get(id=product_id)
 
     if request.user.is_authenticated:
         carts = Cart.objects.filter(user=request.user, product=product)
@@ -18,16 +22,52 @@ def cart_add(request, product_slug):
         else:
             Cart.objects.create(user=request.user, product=product, amount=1)
 
-    return redirect(request.META['HTTP_REFERER'])
+    user_cart = get_user_carts(request)
+    cart_items_html = render_to_string("includes/included_cart.html", {"carts": user_cart}, request=request)
+
+    responce_data = {
+        "message": "Товар добавлен в корзину",
+        "cart_items_html": cart_items_html
+    }
+
+    return JsonResponse(responce_data)
 
 
-def cart_change(request, product_slug): ...
-
-
-def cart_remove(request, cart_id):
+def cart_change(request):
+    cart_id = request.POST.get("cart_id")
+    amount = request.POST.get("amount")
 
     cart = Cart.objects.get(id=cart_id)
+
+    cart.amount = amount
+    cart.save()
+    updated_amount = cart.amount
+
+    cart = get_user_carts(request)
+    cart_items_html = render_to_string(
+        "includes/included_cart.html", {"carts": cart}, request=request)
+
+    response_data = {
+        "message": "Количество изменено",
+        "cart_items_html": cart_items_html,
+        "quaantity": updated_amount,
+    }
+
+    return JsonResponse(response_data)
+
+
+def cart_remove(request):
+    cart_id = request.POST.get("cart_id")
+    cart = Cart.objects.get(id=cart_id)
+    amount = cart.amount
     cart.delete()
 
-    return redirect(request.META['HTTP_REFERER'])
+    user_cart = get_user_carts(request)
+    cart_items_html=render_to_string("includes/included_cart.html", {'carts': user_cart}, request)
 
+    response_data = {
+        "message": "Товар удалён из корзины",
+        "cart_items_html": cart_items_html,
+        "amount_deleted": amount}
+    
+    return JsonResponse(response_data)
