@@ -2,10 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.http import HttpResponseRedirect
 from django.contrib import auth, messages
+from django.db.models import Prefetch
 from django.urls import reverse
 
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from orders.models import Order, OrderItem
 from carts.models import Cart
 
 
@@ -32,6 +34,8 @@ def login(request):
                 return HttpResponseRedirect(reverse("main:index"))
     else: 
         form = UserLoginForm()
+    
+    
     
     context = {
         "title":"Авторизация",
@@ -75,9 +79,17 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
 
+    orders = Order.objects.filter(user=request.user).prefetch_related(
+              Prefetch(
+                  "orderitem_set",
+                  queryset=OrderItem.objects.select_related("product"),
+              )
+          ).order_by("-id")
+    
     context = {
         'title': 'Кабинет',
         'form': form,
+        "orders": orders
     }
     return render(request, 'users/profile.html', context)
 
