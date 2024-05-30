@@ -2,7 +2,7 @@
 
 This is a simple version of the e-commerce website created with Django.
 
-![](readme_img\photo_2024-05-30_16-03-24.jpg)
+![](readme_img/photo_2024-05-30_16-03-24.jpg)
 
 ## Project Summary
 
