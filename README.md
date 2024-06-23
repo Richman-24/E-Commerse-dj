@@ -45,7 +45,12 @@ DB_HOST="localhost"
 DB_PORT="5432"
 
 ```
+## Plan to upgrade
 
- ## Gratitude
- Special thanks to [PythonHubStudio](https://github.com/PythonHubStudio) for the good Django course.
+In the future, a payment module, a feedback form, email notifications, automatic calculation of the cost of delivery,
+two-factor authentication, communication with CRM will be added
+ 
+## Gratitude
+
+Special thanks to [PythonHubStudio](https://github.com/PythonHubStudio) for the good Django course.
 
