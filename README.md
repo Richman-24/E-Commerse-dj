@@ -46,7 +46,6 @@ DB_PORT="5432"
 
 ```
 
-## Gratitude
-Отдельное спасибо [PythonHubStudio](https://github.com/PythonHubStudio)
-за отличный курс по Django, благодаря которому был создан этот проект.
+ ## Gratitude
+ Special thanks to [PythonHubStudio](https://github.com/PythonHubStudio) for the good Django course.
 
