@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.http import Http404
 
 from .models import Products
 from .utils import q_search
@@ -10,6 +11,7 @@ def catalog(request, category_slug=None):
     on_sale = request.GET.get("on_sale", None)
     order_by = request.GET.get("order_by", None)
     query = request.GET.get("q", None)
+    title_obj = " "
     
     if category_slug == "all":
         goods = Products.objects.all()
@@ -17,6 +19,9 @@ def catalog(request, category_slug=None):
         goods = q_search(query)
     else:
         goods = Products.objects.filter(category__slug=category_slug)
+        if not goods.exists():
+            raise Http404()
+        title_obj = f"- {goods[0].category.name}"
     
     if on_sale:
         goods = goods.filter(discount__gt = 0)
@@ -27,7 +32,7 @@ def catalog(request, category_slug=None):
     current_page = paginator.page(int(page))
     
     context = {
-        "title": "Best Coffee - Каталог",
+        "title": title_obj,
         "goods": current_page,
         "slug_url": category_slug
     }
@@ -39,8 +44,8 @@ def product(request, product_slug):
     product = Products.objects.get(slug = product_slug)
     
     context = {
-        "title": "Best Coffee",
+        "title": product.name,
         "product": product
     }
 
-    return render(request, 'goods/product.html', context)
+    return render(request, "goods/product.html", context)
