@@ -1,16 +1,10 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
-def index(request):
 
-    context = {
-        "title": "Главная",
-    }
-    return render(request, 'main/index.html', context)
 
-def about(request):
+class IndexView(TemplateView):
+    template_name = "main/index.html"
 
-    context = {
-        "title": "Интернет магазин премиум кофе – Эксклюзивные редкие сорта кофе купить",
-    }
 
-    return render(request, 'main/about.html', context)
+class AboutView(TemplateView):
+    template_name = "main/about.html"
