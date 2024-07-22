@@ -74,9 +74,13 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         messages.success(self.request, "Изменения в профиле сохранены")
         return super().form_valid(form)
     
+    def form_invalid(self, form):
+        messages.error(self.request, "Произошла ошибка")
+        return super().form_invalid(form)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["order"] = Order.objects.filter(user=self.request.user).prefetch_related(
+        context["orders"] = Order.objects.filter(user=self.request.user).prefetch_related(
             Prefetch(
                 "orderitem_set",
                 queryset=OrderItem.objects.select_related("product"),

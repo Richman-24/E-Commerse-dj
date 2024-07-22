@@ -87,7 +87,7 @@ class CartRemoveView(CartMixin, View):
 
         response_data = {
             "message": "Товар удален из корзины",
-            "quantity_deleted": amount,
+            "amount_deleted": amount,
             'cart_items_html': self.render_cart(request)
         }
 
